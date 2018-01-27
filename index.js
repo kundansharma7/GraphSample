@@ -28,7 +28,7 @@ app.engine('hbs', hbs.express4({
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', function (req, res) {
-    let test = [
+    let test1 = [
         {
             "Genre": '2010',
             "Fantasy&SciFi": 10,
@@ -55,45 +55,158 @@ app.get('/', function (req, res) {
             "General": 30,
             "Western": 12,
             "Literature": 13
+        },
+        {
+            "Genre": '2031',
+            "Fantasy&Sci Fi": 28,
+            "Romance": 19,
+            "Mystery/Crime": 29,
+            "General": 30,
+            "Western": 12,
+            "Literature": 13
+        },
+        {
+            "Genre": '2032',
+            "Fantasy&Sci Fi": 28,
+            "Romance": 19,
+            "Mystery/Crime": 29,
+            "General": 30,
+            "Western": 12,
+            "Literature": 13
+        },
+        {
+            "Genre": '2032',
+            "Fantasy&Sci Fi": 28,
+            "Romance": 19,
+            "Mystery/Crime": 29,
+            "General": 30,
+            "Western": 12,
+            "Literature": 13
+        },
+        {
+            "Genre": '2033',
+            "Fantasy&Sci Fi": 28,
+            "Romance": 19,
+            "Mystery/Crime": 29,
+            "General": 30,
+            "Western": 12,
+            "Literature": 13
+        },
+        {
+            "Genre": '2034',
+            "Fantasy&Sci Fi": 28,
+            "Romance": 19,
+            "Mystery/Crime": 29,
+            "General": 30,
+            "Western": 12,
+            "Literature": 13
+        },
+        {
+            "Genre": '2035',
+            "Fantasy&Sci Fi": 28,
+            "Romance": 19,
+            "Mystery/Crime": 29,
+            "General": 30,
+            "Western": 12,
+            "Literature": 13
+        },
+        {
+            "Genre": '2036',
+            "Fantasy&Sci Fi": 28,
+            "Romance": 19,
+            "Mystery/Crime": 29,
+            "General": 30,
+            "Western": 12,
+            "Literature": 13
+        },
+        {
+            "Genre": '2037',
+            "Fantasy&Sci Fi": 28,
+            "Romance": 19,
+            "Mystery/Crime": 29,
+            "General": 30,
+            "Western": 12,
+            "Literature": 13
+        },
+        {
+            "Genre": '2038',
+            "Fantasy&Sci Fi": 28,
+            "Romance": 19,
+            "Mystery/Crime": 29,
+            "General": 30,
+            "Western": 12,
+            "Literature": 13
         }
     ];
- 
+    let test_temp = {
+        "Genre": 'Other',
+        "Fantasy&Sci Fi": 0,
+        "Romance": 0,
+        "Mystery/Crime": 0,
+        "General": 0,
+        "Western": 0,
+        "Literature": 0
+    };
+    let test = test1.map((t, idx) => {
+        if(idx > 8) {
+            test_temp["Fantasy&Sci Fi"] += t["Fantasy&Sci Fi"];
+            test_temp["Romance"] += t["Romance"];
+            test_temp["Mystery/Crime"] += t["Mystery/Crime"];
+            test_temp["General"] += t["General"];
+            test_temp["Western"] += t["Western"];
+            test_temp["Literature"] += t["Literature"];
+            if(test1.length == (idx + 1)) {
+                return test_temp;
+            }
+        } else {
+            return t;
+        }
+    }).filter((t) => {
+        if(t !== undefined) {
+            return t;
+        }
+    });
+
+    // console.log(test);
+
     let tempArr = [];
-
+    let counter = 0;
+    
     //for (var x in test){
-        // if (test.hasOwnProperty(x)){
-          // your code
-          
-          for (var y of Object.keys(test)) {
-            let t = [], t1 = [];
-            if(y == 0) {
-                for(var z of Object.keys(test[y])) {
-                    t1.push(z);
-                }
-                tempArr.unshift(t1);
-            }
-            for(var z of Object.keys(test[y])) {
-                // console.log('yyyyyyyyyyyyyyyyyyyyy', y);
-                // console.log("zzzzzzzzzzzzzzzzzz",z);
-                
-                t.push(test[y][z])
-            }
-            tempArr.push(t);
-          }
-          
-        //}
-      //}
+    // if (test.hasOwnProperty(x)){
+    // your code
 
-console.log(tempArr);
-var user = {
-    title: "new handlebar title",
-    data1: JSON.stringify(tempArr),
-    first: 'Brian',
-    last: 'Mancini',
-    site: 'http://derpturkey.com',
-    age: 32
-};
-console.log(JSON.stringify(user));
+    for (var y of Object.keys(test)) {
+        counter++;
+        let t = [], t1 = [];
+        if (y == 0) {
+            for (var z of Object.keys(test[y])) {
+                t1.push(z);
+            }
+            tempArr.unshift(t1);
+        }
+        for (var z of Object.keys(test[y])) {
+            // console.log('yyyyyyyyyyyyyyyyyyyyy', y);
+            // console.log("zzzzzzzzzzzzzzzzzz",z);
+
+            t.push(test[y][z])
+        }
+            tempArr.push(t);
+    }
+
+    //}
+    //}
+
+    // console.log(tempArr);
+    var user = {
+        title: "new handlebar title",
+        data1: JSON.stringify(tempArr),
+        first: 'Brian',
+        last: 'Mancini',
+        site: 'http://derpturkey.com',
+        age: 32
+    };
+    // console.log(JSON.stringify(user));
     res.render('index', user);
 
 });
