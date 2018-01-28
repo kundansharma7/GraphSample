@@ -1,11 +1,17 @@
 var express = require('express')
     , exphbs = require('express-handlebars')
     , path = require('path')
+    , serveStatic = require('serve-static')
     , app
     ;
 
 // create Express 4 App
 app = express();
+
+
+//app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/static', serveStatic(path.join(__dirname, 'public')))
+
 
 // set the view engine
 app.set('view engine', 'hbs');
@@ -27,7 +33,7 @@ app.engine('hbs', hbs.express4({
 // configure views path
 app.set('views', path.join(__dirname, 'views'));
 
-app.get('/', function (req, res) {
+function getData() {
     let test1 = [
         {
             "Genre": '2010',
@@ -193,6 +199,10 @@ app.get('/', function (req, res) {
         }
             tempArr.push(t);
     }
+    return tempArr;
+}
+app.get('/', function (req, res) {
+    
 
     //}
     //}
@@ -200,7 +210,7 @@ app.get('/', function (req, res) {
     // console.log(tempArr);
     var user = {
         title: "new handlebar title",
-        data1: JSON.stringify(tempArr),
+        data1: JSON.stringify(getData()),
         first: 'Brian',
         last: 'Mancini',
         site: 'http://derpturkey.com',
@@ -210,5 +220,12 @@ app.get('/', function (req, res) {
     res.render('index', user);
 
 });
+
+app.get('/graph', (req, res) => {
+    let testData = {
+        data1: JSON.stringify(getData())
+    }
+    res.render('graph', testData);
+})
 
 app.listen(8000);
