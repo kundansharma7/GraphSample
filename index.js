@@ -225,7 +225,88 @@ app.get('/graph', (req, res) => {
     let testData = {
         data1: JSON.stringify(getData())
     }
-    res.render('graph', testData);
+
+
+let resultData = [
+    {
+        total: 34,
+        company: "Authbridge",
+        location: "Gurgaon"
+    },
+    {
+        total: 31,
+        company: "Authbridge",
+        location: "Mumbai"
+    },
+    {
+        total: 24,
+        company: "Accenture",
+        location: "Gurgaon"
+    },
+    {
+        total: 22,
+        company: "TCS",
+        location: "Gurgaon"
+    },
+    {
+        total: 16,
+        company: "Accenture",
+        location: "Noida"
+    },
+    {
+        total: 14,
+        company: "Authbridge",
+        location: "Noida"
+    },
+    {
+        total: 12,
+        company: "Accenture",
+        location: "Mumbai"
+    },
+    {
+        total: 2,
+        company: "TCS",
+        location: "Noida"
+    }
+];
+console.log(Object.keys(resultData[0]));
+let locations = resultData.map((obj, index, self) => {
+    //console.log(Object.keys(obj))
+    return obj.location;
+}).filter((item, index, self) => {
+    return self.indexOf(item) == index;
+});
+console.log(locations);
+let companies = resultData.map((obj, index, self) => {
+    return obj.company;
+}).filter((item, index, self) => {
+    return self.indexOf(item) == index;
+});
+companies.unshift("location")
+console.log(companies);
+let arrData = [];
+arrData.push(companies);
+for(let l of locations) {
+    let loc = [];
+    loc.push(l);
+    for(let i=1; i<companies.length;i++){
+        let searchPerformed = 0;
+        resultData.filter((data, index) => {
+            if(data.company == companies[i] && data.location == l) {
+                searchPerformed += parseInt(data.total);
+            }
+        });
+        loc.push(searchPerformed);
+    }
+    arrData.push(loc);
+}
+console.log(arrData)
+
+let dummyData = {
+    data1: JSON.stringify(arrData)
+}
+// res.render('graph', testData);
+    res.render('graph', dummyData);
 })
 
 app.listen(8000);
