@@ -234,6 +234,11 @@ let resultData = [
         location: "Gurgaon"
     },
     {
+        total: 32,
+        company: "TCS",
+        location: "Gurgaon"
+    },
+    {
         total: 31,
         company: "Authbridge",
         location: "Mumbai"
@@ -241,11 +246,6 @@ let resultData = [
     {
         total: 24,
         company: "Accenture",
-        location: "Gurgaon"
-    },
-    {
-        total: 22,
-        company: "TCS",
         location: "Gurgaon"
     },
     {
@@ -282,21 +282,27 @@ let companies = resultData.map((obj, index, self) => {
 }).filter((item, index, self) => {
     return self.indexOf(item) == index;
 });
-companies.unshift("location")
+companies.unshift("location");
+companies.push("Others");
 console.log(companies);
+const MAX_LEN = 2;
 let arrData = [];
 arrData.push(companies);
 for(let l of locations) {
     let loc = [];
     loc.push(l);
     for(let i=1; i<companies.length;i++){
-        let searchPerformed = 0;
-        resultData.filter((data, index) => {
-            if(data.company == companies[i] && data.location == l) {
-                searchPerformed += parseInt(data.total);
-            }
-        });
-        loc.push(searchPerformed);
+        // if(i > 2) {
+        //     console.log('$$$$$$$$$$$$$$$$$$$$$$$$', i)
+        // } else {
+            let searchPerformed = 0;
+            resultData.filter((data, index) => {
+                if(data.company == companies[i] && data.location == l) {
+                    searchPerformed += parseInt(data.total);
+                }
+            });
+            loc.push(searchPerformed);
+        //}
     }
     arrData.push(loc);
 }
