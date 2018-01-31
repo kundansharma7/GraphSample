@@ -17,61 +17,29 @@
                 <div class="col-sm-6">
                     <div class="panel panel-default panel-style">
                         <div class="panel-body">
-                            <label>
-                                <select class="multiselect" multiple="multiple"></select>
-                            </label>
-                            <br/>
-
-                            <label>
-                                <select class="multiselect1" multiple="multiple"></select>
-                            </label>
-                            <br/>
-                            <select name="employerName" id="employerName" class="required-field isDashboard" required>
-                                <option value="">Select Employer</option>
-                                <option value="1">ff
-                                {{!-- <input type="checkbox" id="coding" name="interest" value="coding"> --}}
-                                Coding
-                                </option>
-                                {{!-- {{#each employers}}
-                                <option value="{{employer_id}}">{{company.name}}</option>
-                                {{/each}} --}}
-                            </select>
-
-
-                            
-
-{{!-- https://codepen.io/elmahdim/pen/hlmri --}}
-
-
-                            <legend>Choose your interests</legend>
-                            <div>
-                                <input type="checkbox" id="coding" name="interest" value="coding">
-                                <label for="coding">Coding</label>
+                            <div class="example1">
+                                <div>
+                                    <input type="checkbox" name="selectall1" id="selectall1" onclick="toggle(this)" class="all">
+                                    <label for="selectall1">Select all</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" class="chk" name="check[]" onclick="checkBoxClick(4)" id="check1" value="1">
+                                    <label for="check1">1. checkbox</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" class="chk" name="check[]" onclick="checkBoxClick(4)" id="check2" value="2">
+                                    <label for="check2">2. checkbox</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" class="chk" name="check[]" onclick="checkBoxClick(4)" id="check3" value="3">
+                                    <label for="check3">3. checkbox</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" class="chk" name="check[]" onclick="checkBoxClick(4)" id="check4" value="4">
+                                    <label for="check4">4. checkbox</label>
+                                </div>
                             </div>
-                            <div>
-                                <input type="checkbox" id="music" name="interest" value="music">
-                                <label for="music">Music</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="art" name="interest" value="art">
-                                <label for="art">Art</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="sports" name="interest" value="sports">
-                                <label for="sports">Sports</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="cooking" name="interest" value="cooking">
-                                <label for="cooking">Cooking</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="other" name="interest" value="other">
-                                <label for="other">Other</label>
-                                <input type="text" id="otherValue" name="other">
-                            </div>
-                            <div>
-                                <button type="submit">Submit form</button>
-                            </div>
+                            {{!-- https://codepen.io/elmahdim/pen/hlmri --}}
                         </div>
                     </div>
                 </div>
@@ -79,24 +47,46 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        var name = ['joe', 'mary', 'rose'];
-        $.map(name, function (x) {
-            return $('.multiselect').append("<option>" + x + "</option>");
-        });
-
-        $('.multiselect')
-            .multiselect({
-                allSelectedText: 'All',
-                maxHeight: 200,
-                includeSelectAllOption: true
-            })
-            .multiselect('selectAll', true)
-            .multiselect('updateButtonText');
-    });
+<script>
+		//$('.example1').checkboxall();
 </script>
+<script type="text/javascript">
+    function checkBoxClick(totalChkBoxLen) {
+        var val = [];
+        $(':checkbox[class=chk]:checked').each(function (i) {
+            val[i] = $(this).val();
+        });console.log(totalChkBoxLen == val.length)
+        if (totalChkBoxLen == val.length) {
+            //$('input[name=selectall1]').attr('checked', true);
+            $( "#selectall1" ).prop( "checked", true );
+        } else {
+            //$('input[name=selectall1]').attr('checked', false);
+            //$("#selectall1").removeAttr('checked')
+            $( "#selectall1" ).prop( "checked", false );
+        }
+        console.log(val.join());
 
+
+    }
+
+    function toggle(source) {
+        checkboxes = document.getElementsByClassName('chk');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+    function checkBoxAllClick(val) {
+        $('input[type="checkbox"]').click(function () {
+            if ($(this).prop("checked") == true) {
+                alert("Checkbox is checked.");
+            }
+            else if ($(this).prop("checked") == false) {
+                alert("Checkbox is unchecked.");
+            }
+        });
+    }
+</script>
 <script type="text/javascript">
     var arr = document.getElementById("eee").value;
 
@@ -116,13 +106,13 @@
         //console.log(typeof (arr));
         //console.log(arr)
         var data = google.visualization.arrayToDataTable(JSON.parse(arr)
-           /* [
-            ['Genre', 'Fantasy & Sci Fi', 'Romance', 'Mystery/Crime', 'General',
-                'Western', 'Literature'],
-            ['2010', 10, 24, 20, 32, 18, 5],
-            ['2020', 16, 22, 23, 30, 16, 9],
-            ['2030', 28, 19, 29, 30, 12, 13]
-        ]*/
+            /* [
+             ['Genre', 'Fantasy & Sci Fi', 'Romance', 'Mystery/Crime', 'General',
+                 'Western', 'Literature'],
+             ['2010', 10, 24, 20, 32, 18, 5],
+             ['2020', 16, 22, 23, 30, 16, 9],
+             ['2030', 28, 19, 29, 30, 12, 13]
+         ]*/
 
         );
 
