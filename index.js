@@ -309,7 +309,33 @@ for(let l of locations) {
 console.log(arrData)
 
 let dummyData = {
-    data1: JSON.stringify(arrData)
+    data1: JSON.stringify(arrData),
+    city: [
+        {
+            id: 1,
+            name: 'New Delhi'
+        },
+        {
+            id: 2,
+            name: 'Mumbai'
+        },
+        {
+            id: 3,
+            name: 'Goa'
+        },
+        {
+            id: 4,
+            name: 'Patna'
+        },
+        {
+            id: 5,
+            name: 'Noida'
+        },
+        {
+            id: 6,
+            name: 'Gurgaon'
+        }
+    ]
 }
 // res.render('graph', testData);
     res.render('graph', dummyData);

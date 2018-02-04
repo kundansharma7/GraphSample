@@ -17,27 +17,21 @@
                 <div class="col-sm-6">
                     <div class="panel panel-default panel-style">
                         <div class="panel-body">
-                            <div class="example1">
+                            <div>
+                                <span id="selectCity">Select city</span>
+                            </div>
+                            <div class="example1" id="example1">
+                                <input type="text" id="myInput" onkeyup="searchCity()" placeholder="Search for names..">
                                 <div>
                                     <input type="checkbox" name="selectall1" id="selectall1" onclick="toggle(this)" class="all">
                                     <label for="selectall1">Select all</label>
                                 </div>
+                                {{#each city}}
                                 <div>
-                                    <input type="checkbox" class="chk" name="check[]" onclick="checkBoxClick(4)" id="check1" value="1">
-                                    <label for="check1">1. checkbox</label>
+                                    <input type="checkbox" class="chk" name="check[]" onclick="checkBoxClick('+{{this.name}}+')" id="check{{@index}}" value="{{this.name}}">
+                                    <label for="check1">{{this.name}}</label>
                                 </div>
-                                <div>
-                                    <input type="checkbox" class="chk" name="check[]" onclick="checkBoxClick(4)" id="check2" value="2">
-                                    <label for="check2">2. checkbox</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" class="chk" name="check[]" onclick="checkBoxClick(4)" id="check3" value="3">
-                                    <label for="check3">3. checkbox</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" class="chk" name="check[]" onclick="checkBoxClick(4)" id="check4" value="4">
-                                    <label for="check4">4. checkbox</label>
-                                </div>
+                                {{/each}}
                             </div>
                             {{!-- https://codepen.io/elmahdim/pen/hlmri --}}
                         </div>
@@ -55,36 +49,35 @@
         var val = [];
         $(':checkbox[class=chk]:checked').each(function (i) {
             val[i] = $(this).val();
-        });console.log(totalChkBoxLen == val.length)
+        });
         if (totalChkBoxLen == val.length) {
             //$('input[name=selectall1]').attr('checked', true);
-            $( "#selectall1" ).prop( "checked", true );
+            $("#selectall1").prop("checked", true);
         } else {
             //$('input[name=selectall1]').attr('checked', false);
             //$("#selectall1").removeAttr('checked')
-            $( "#selectall1" ).prop( "checked", false );
+            $("#selectall1").prop("checked", false);
         }
         console.log(val.join());
-
-
     }
 
     function toggle(source) {
         checkboxes = document.getElementsByClassName('chk');
+        var val = [];
         for (var i = 0, n = checkboxes.length; i < n; i++) {
             checkboxes[i].checked = source.checked;
+            val[i] = checkboxes[i].value;
+        }
+        console.log(source.id)
+        if (document.getElementById(source.id).checked) {
+            console.log(val.join())
+        } else {
+            val = [];
         }
     }
-
-    function checkBoxAllClick(val) {
-        $('input[type="checkbox"]').click(function () {
-            if ($(this).prop("checked") == true) {
-                alert("Checkbox is checked.");
-            }
-            else if ($(this).prop("checked") == false) {
-                alert("Checkbox is unchecked.");
-            }
-        });
+    function searchCity() {
+        var searchVal = $('#myInput').val();
+        console.log(searchVal);
     }
 </script>
 <script type="text/javascript">
@@ -145,4 +138,13 @@
         var chart = new google.visualization.BarChart(document.getElementById("barchart_values1"));
         chart.draw(view, options);
     }
+
+
+    $(document).ready(
+    function(){
+        $("#example1").hide();
+        $("#selectCity").click(function () {
+            $("#example1").toggle();
+        });
+    });
 </script>
