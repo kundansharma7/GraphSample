@@ -5,7 +5,11 @@
         height: 400px
     }
 </style>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div id="myTemplate"></div>
+<div>
+    <button onclick="downloadPdf()" >Download Pdf</button>
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
@@ -98,14 +102,14 @@
         //arr = typeof arr == 'string' ? [arr] : arr;
         //console.log(typeof (arr));
         //console.log(arr)
-        var data = google.visualization.arrayToDataTable(JSON.parse(arr)
-            /* [
+        var data = google.visualization.arrayToDataTable(//JSON.parse(arr)
+             [
              ['Genre', 'Fantasy & Sci Fi', 'Romance', 'Mystery/Crime', 'General',
-                 'Western', 'Literature'],
-             ['2010', 10, 24, 20, 32, 18, 5],
-             ['2020', 16, 22, 23, 30, 16, 9],
-             ['2030', 28, 19, 29, 30, 12, 13]
-         ]*/
+                 'Western', 'Literature' , { role: 'style' }],
+             ['2010', 10, 24, 20, 32, 18, 5, 'red'],
+             ['2020', 16, 22, 23, 30, 16, 9, 'Green'],
+             ['2030', 28, 19, 29, 30, 12, 13, 'Yellow']
+         ]
 
         );
 
@@ -139,12 +143,27 @@
         chart.draw(view, options);
     }
 
-
+var divItem;
     $(document).ready(
     function(){
+        divItem = $('.container-fluid').html();
+        //console.log(divItem)
+
         $("#example1").hide();
         $("#selectCity").click(function () {
             $("#example1").toggle();
         });
+
+        $("#myTemplate").template("templateEx");
     });
+
+    function downloadPdf() {
+        $.ajax({
+            type: 'POST',
+            url: '/pdf',
+            data: divItem,
+            dataType: 'json',
+            success: function(resultData) { alert("Save Complete");;; }
+        });
+    }
 </script>
